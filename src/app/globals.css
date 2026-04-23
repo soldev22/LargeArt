@@ -11,15 +11,17 @@
   --ring: color-mix(in oklab, var(--foreground) 35%, var(--background));
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-surface: var(--surface);
-  --color-muted: var(--muted);
-  --color-border: var(--border);
-  --color-ring: var(--ring);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+@layer base {
+  :root {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-surface: var(--surface);
+    --color-muted: var(--muted);
+    --color-border: var(--border);
+    --color-ring: var(--ring);
+    --font-sans: var(--font-geist-sans);
+    --font-mono: var(--font-geist-mono);
+  }
 }
 
 @media (prefers-color-scheme: dark) {
@@ -45,8 +47,9 @@ body {
   html {
     height: 100%;
     color-scheme: light dark;
-    -webkit-text-size-adjust: 100%;
-    text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%; /* fallback */
+    /* stylelint-disable-next-line property-no-unknown */
+    text-size-adjust: 100%;/* modern */
   }
 
   body {
@@ -63,7 +66,13 @@ body {
     text-decoration: underline;
     text-underline-offset: 0.2em;
     text-decoration-thickness: 1px;
-    text-decoration-color: color-mix(in oklab, var(--foreground) 35%, transparent);
+    text-decoration-color: currentColor;
+  /* Fallback for older browsers */
+text-decoration-color: var(--foreground);
+
+
+
+
   }
 
   a:hover {
